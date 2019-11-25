@@ -14,7 +14,9 @@ def login():
     form = LoginForm()
     message = ""
     error = False
+
     if form.validate_on_submit():
+
         if user is not None and user.authenticate(password):
             login_user(user)
             return redirect('/')
