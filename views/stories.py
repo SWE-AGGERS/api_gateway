@@ -242,20 +242,16 @@ def filter_stories():
         if form.validate_on_submit():
             init_date = form.init_date.data
             end_date = form.end_date.data
-            f_stories = db.session.query(Story, User)\
-                .filter(Story.date >= init_date)\
-                .filter(Story.date <= end_date)\
-                .join(User)\
-                .all()
+            f_stories = get_filtered_stories(init_date, end_date)
             if f_stories is not None:
                 f_stories = list(
                     map(lambda x: (
                         x[0],
                         x[1],
-                        "hidden" if x[1].id == current_user.id else "",
+                        "hidden" if x[1]["id"] == current_user.id else "",
                         "unfollow" if _is_follower(
-                            current_user.id, x[1].id) else "follow",
-                        reacted(current_user.id, x[0].id)
+                            current_user.id, x[1]["id"]) else "follow",
+                        reacted(current_user.id, x[0]["id"])
                     ), f_stories))
                 return render_template('filter_stories.html',
                                        form=form,
@@ -272,6 +268,20 @@ def filter_stories():
                                    info_bar=True,
                                    error=True,
                                    res_msg='Cant travel back in time! Doublecheck dates')
+
+
+def get_filtered_stories(init_date, end_date):
+    url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/filter'
+    _json = {"init_date": init_date, "end_date": end_date, "userid": current_user.id}
+    reply = request.post(url, json=_json, timeout=1)
+    reply = json.loads(str(reply.data))
+    if reply["result"] == 1:
+        return reply["stories"]
+    elif reply["result"] == 0
+        return []
+    else:
+        return None #Raise exception? #TODO
+
 
 
 def add_reaction(reacterid, storyid, reactiontype):
