@@ -23,9 +23,9 @@ def _users():
         map(lambda x: (
             x[0],
             x[1],
-            "hidden" if x[1]["id"] == current_user.id else "",
-            "unfollow" if _is_follower(current_user.id, x[1]["id"]) else "follow",
-            reacted(current_user.id, x[0]["id"])
+            "hidden" if x[1]['user_id'] == current_user.id else "",
+            "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
+            reacted(current_user.id, x[0]['id'])
         ), user_stories)
     )
     
@@ -54,3 +54,11 @@ def get_users_s():
     # TODO error
     reply = request.get(url, timeout=1)
     return json.loads(str(reply.data, 'utf8'))
+
+
+def is_follower_s(user_a, user_b):
+    """check if user_a follow user_b"""
+    reply = request.get('http://' + FOLLOWERS_SERVICE_IP + ':' + FOLLOWERS_SERVICE_PORT +\
+                        '/is_follower/' + user_a + '/' + user_b, timeout=1)
+    body = json.loads(str(reply.data, 'utf8'))
+    return body['follow']
