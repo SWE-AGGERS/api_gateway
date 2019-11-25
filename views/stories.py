@@ -216,11 +216,19 @@ def _roll(dicenumber, dicesetid):
 
 @storiesbp.route('/stories/random', methods=['GET'])
 def random_story():
-    q = db.session.query(Story).order_by(func.random()).limit(
-        1)
-    random_story_from_db = q.first()
-    return redirect('/stories/'+str(random_story_from_db.id))
-#    return render_template("story_detail.html", story=random_story_from_db)
+    random_story = get_random_story()
+    return None # TODO: which return is the right one?
+    #return redirect('/stories/'+str(random_story_from_db.id))
+    #return render_template("story_detail.html", story=random_story_from_db)
+
+def get_random_story():
+    url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/random'
+    reply = request.get(url, timeout=1)
+    reply = json.loads(str(reply.data))
+    if reply["result"] == 1:
+        return reply["story"]
+    else:
+        raise StoryNonExistsError('Story not exists!')
 
 
 @storiesbp.route('/stories/filter', methods=['GET', 'POST'])
