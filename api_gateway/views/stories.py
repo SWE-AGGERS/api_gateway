@@ -4,8 +4,7 @@ from flask import Blueprint, render_template, request
 from api_gateway.auth import current_user
 from flask_login import (current_user, login_required)
 
-from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, \
-    FOLLOWERS_SERVICE_IP, FOLLOWERS_SERVICE_PORT
+from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
 from api_gateway.forms import StoryForm, SelectDiceSetForm, StoryFilter
 from api_gateway.database import db, Story, Reaction, User
 from api_gateway.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
@@ -146,7 +145,7 @@ def get_users_s(_id):
 
 def is_follower_s(user_a, user_b):
     """check if user_a follow user_b"""
-    reply = request.get('http://' + FOLLOWERS_SERVICE_IP + ':' + FOLLOWERS_SERVICE_PORT +\
+    reply = request.get('http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT +\
                         '/is_follower/' + user_a + '/' + user_b, timeout=1)
     body = json.loads(str(reply.data, 'utf8'))
     return body['follow']
