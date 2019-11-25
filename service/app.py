@@ -1,10 +1,8 @@
-import datetime
-
 from flask import Flask
-
-from api_gateway.auth import login_manager
-from api_gateway.database import db, User, Story
-from api_gateway.views import blueprints
+from service.auth import login_manager
+from service.database import db, User, Story
+from service.views import blueprints
+import datetime
 
 
 def create_app(debug=False):

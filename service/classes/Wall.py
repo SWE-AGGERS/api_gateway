@@ -1,6 +1,6 @@
 from flask import Response
 
-from api_gateway.database import Story, User
+from service.database import Story, User
 
 
 class PlainStory(dict):

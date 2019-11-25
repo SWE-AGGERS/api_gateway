@@ -1,14 +1,16 @@
+"""
+
 from flask import Blueprint, redirect, render_template, request
 
-from api_gateway.database import db, User, Story
-from api_gateway.forms import UserForm
+from service.database import db, User, Story
+from service.forms import UserForm
 from flask_login import current_user
 from sqlalchemy import desc
-from api_gateway.views.follow import _is_follower
-from api_gateway.views.stories import reacted
+from service.views.follow import _is_follower
+from service.views.stories import reacted
 
-from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
-
+from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
+from service.constants import FOLLOWERS_SERVICE_IP,FOLLOWERS_SERVICE_PORT
 
 users = Blueprint('users', __name__)
 
@@ -49,7 +51,7 @@ def get_stories_s(userid, limit=0):
 
 
 def get_users_s():
-    """Get the list of all users"""
+    "Get the list of all users
     url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/users'
     # TODO error
     reply = request.get(url, timeout=1)
@@ -57,8 +59,11 @@ def get_users_s():
 
 
 def is_follower_s(user_a, user_b):
-    """check if user_a follow user_b"""
+    check if user_a follow user_b
     reply = request.get('http://' + FOLLOWERS_SERVICE_IP + ':' + FOLLOWERS_SERVICE_PORT +\
                         '/is_follower/' + user_a + '/' + user_b, timeout=1)
     body = json.loads(str(reply.data, 'utf8'))
     return body['follow']
+    
+
+"""

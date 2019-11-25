@@ -1,4 +1,4 @@
-from api_gateway.database import Story, db, Reaction
+from service.database import Story, db, Reaction
 from sqlalchemy.sql import func
 
 

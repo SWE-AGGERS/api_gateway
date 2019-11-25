@@ -1,9 +1,9 @@
 import datetime
 import unittest
 
-from monolith.app import create_app
-from monolith.database import Story, User, db
-from monolith.tests.restart_db import restart_db_tables
+from service.app import create_app
+from service.database import Story, User, db
+from service.tests.restart_db import restart_db_tables
 
 _app = None
 

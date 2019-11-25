@@ -1,4 +1,4 @@
-from api_gateway.classes import DiceSet as ds
+from service.classes import DiceSet as ds
 import nltk
 nltk.download('wordnet')
 

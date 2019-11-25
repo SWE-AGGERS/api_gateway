@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template
 from flask import request
-from api_gateway.database import User, Story
-from api_gateway.auth import current_user
-from api_gateway.database import db, Story
+from service.database import User, Story
+from service.auth import current_user
+from service.database import db, Story
 from sqlalchemy import func
 
 search = Blueprint('search', __name__)

@@ -22,3 +22,5 @@ nltk
 pytest
 pytest-cov
 python-dotenv
+sql
+requests

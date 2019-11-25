@@ -1,12 +1,12 @@
 from celery import Celery
 
-from api_gateway.database import db, Story, Reaction
+from service.database import db, Story, Reaction
 from sqlalchemy import and_
 
 # EMAIL IMPORTS
 from celery import crontab
-from api_gateway.constants import _EMAIL, _PASSWORD
-from api_gateway.database import User, Followers
+from service.constants import _EMAIL, _PASSWORD
+from service.database import User, Followers
 # emails library
 import smtplib
 from email.mime.multipart import MIMEMultipart

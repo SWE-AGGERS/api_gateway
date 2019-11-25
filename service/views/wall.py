@@ -1,13 +1,15 @@
+"""
 from flask import Blueprint, render_template, jsonify
 from flask_login import login_required
 
-from api_gateway.classes.Stats import Stats
-from api_gateway.classes.Wall import Wall
-from api_gateway.database import db, Story, User
-from api_gateway.auth import current_user
-from api_gateway.forms import SelectDiceSetForm
-from api_gateway.views.follow import _is_follower
-from api_gateway.views.stories import reacted
+from service.classes.Stats import Stats
+from service.classes.Wall import Wall
+from service.database import db, Story, User
+from service.auth import current_user
+from service.forms import SelectDiceSetForm
+
+from service.views.follow import _is_follower
+from service.views.stories import reacted
 
 wall = Blueprint('wall', __name__)
 
@@ -108,3 +110,5 @@ def getawall(user_id):
                    id=user.id,
                    email=user.email,
                    stories=user_stories) # thewall.stories
+
+"""

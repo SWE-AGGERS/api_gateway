@@ -1,8 +1,6 @@
 import functools
-
 from flask_login import current_user, LoginManager
-
-from api_gateway.database import User
+from service.database import User
 
 login_manager = LoginManager()
 

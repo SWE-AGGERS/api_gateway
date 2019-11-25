@@ -1,9 +1,10 @@
+"""
 from flask import Blueprint, render_template
 
-from api_gateway.auth import current_user
-from api_gateway.database import db, Story
+from service.auth import current_user
+from service.database import db, Story
 
-from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT
+from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT
 
 
 home = Blueprint('home', __name__)
@@ -32,3 +33,4 @@ def get_story_by_author_id(author_id):
 	        return None
 	except:
 		return None
+"""

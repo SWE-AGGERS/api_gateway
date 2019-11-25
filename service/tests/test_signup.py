@@ -1,5 +1,5 @@
 import unittest
-from monolith import app
+from service import app
 
 
 class SignupTestCase(unittest.TestCase):

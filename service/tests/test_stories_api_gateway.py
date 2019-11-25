@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-from api_gateway.app import create_app
+from service.app import create_app
 
 
 class TestApp(unittest.TestCase):
@@ -8,9 +8,9 @@ class TestApp(unittest.TestCase):
     def test1(self):
         _app = create_app()
         with _app.test_client() as client:
-            with mock.patch('api_gateway.views.stories.get_users_s') as get_user_mock:
-                with mock.patch('api_gateway.views.stories.get_stories_s') as get_stories_mock:
-                    with mock.patch('api_gateway.views.stories.is_follower_s') as is_follower_mock:
+            with mock.patch('service.views.stories.get_users_s') as get_user_mock:
+                with mock.patch('service.views.stories.get_stories_s') as get_stories_mock:
+                    with mock.patch('service.views.stories.is_follower_s') as is_follower_mock:
                         get_user_mock.return_value = {
                                 "firstname": "luca",
                                 "lastname": "perez",

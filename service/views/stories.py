@@ -1,15 +1,17 @@
+"""
+
 from flask import abort, json
 
 from flask import Blueprint, render_template, request
-from api_gateway.auth import current_user
+from service.auth import current_user
 from flask_login import (current_user, login_required)
 
-from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
-from api_gateway.forms import StoryForm, SelectDiceSetForm, StoryFilter
-from api_gateway.database import db, Story, Reaction, User
-from api_gateway.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
-from api_gateway.views.home import index
-from api_gateway.views.check_stories import check_storyV2, InvalidStory, TooLongStoryError, TooSmallStoryError, \
+from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
+from service.forms import StoryForm, SelectDiceSetForm, StoryFilter
+from service.database import db, Story, Reaction, User
+from service.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
+from service.views.home import index
+from service.views.check_stories import check_storyV2, InvalidStory, TooLongStoryError, TooSmallStoryError, \
     WrongFormatDiceError, WrongFormatSingleDiceError, WrongFormatStoryError
 import re
 
@@ -144,7 +146,7 @@ def get_users_s(_id):
     return user
 
 def is_follower_s(user_a, user_b):
-    """check if user_a follow user_b"""
+    check if user_a follow user_b
     reply = request.get('http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT +\
                         '/is_follower/' + user_a + '/' + user_b, timeout=1)
     body = json.loads(str(reply.data, 'utf8'))
@@ -365,3 +367,4 @@ def get_remove_story(storyid,page):
     else:
         # Story doensn't exist
         abort(404)
+"""
