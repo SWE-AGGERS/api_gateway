@@ -2,8 +2,8 @@
 import datetime as dt
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
-from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import relationship
+from werkzeug import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 

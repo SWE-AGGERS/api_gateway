@@ -4,7 +4,7 @@ from api_gateway.database import db, Story, Reaction
 from sqlalchemy import and_
 
 # EMAIL IMPORTS
-from celery.schedules import crontab
+from celery import crontab
 from api_gateway.constants import _EMAIL, _PASSWORD
 from api_gateway.database import User, Followers
 # emails library

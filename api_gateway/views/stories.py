@@ -1,17 +1,12 @@
-from flask import Blueprint, request, redirect, render_template, abort, json, jsonify
-from flask_login import (current_user, login_required)
-from sqlalchemy import func
-from urllib3.util import timeout
+from flask import abort, json
 
-from api_gateway.background import update_reactions
-from flask import Blueprint, redirect, render_template, request
-from api_gateway.auth import admin_required, current_user
-from flask_login import (current_user, login_user, logout_user,
-                         login_required)
+from flask import Blueprint, render_template, request
+from api_gateway.auth import current_user
+from flask_login import (current_user, login_required)
 
 from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, \
     FOLLOWERS_SERVICE_IP, FOLLOWERS_SERVICE_PORT
-from api_gateway.forms import UserForm, StoryForm, SelectDiceSetForm, StoryFilter
+from api_gateway.forms import StoryForm, SelectDiceSetForm, StoryFilter
 from api_gateway.database import db, Story, Reaction, User
 from api_gateway.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
 from api_gateway.views.home import index

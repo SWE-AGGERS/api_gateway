@@ -1,12 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d64d3c32-fed7-40e8-a6b8-90f8820cb91d" name="Default Changelist" comment="" />
+    <list default="true" id="d64d3c32-fed7-40e8-a6b8-90f8820cb91d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api_gateway/tests/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api_gateway/tests/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api_gateway/views/tests/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/api_gateway.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api_gateway.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background.py" beforeDir="false" afterPath="$PROJECT_DIR$/background.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/DiceSet.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/classes/DiceSet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/classes/Stats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Wall.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/classes/Wall.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/tests/test_dice.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/classes/tests/test_dice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/basic_set/die0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/basic_set/die0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/basic_set/die1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/basic_set/die1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/basic_set/die2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/basic_set/die2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/basic_set/die3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/basic_set/die3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/basic_set/die4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/basic_set/die4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/basic_set/die5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/basic_set/die5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/halloween_set/die0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/halloween_set/die0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/halloween_set/die1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/halloween_set/die1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/halloween_set/die2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/halloween_set/die2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/halloween_set/die3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/halloween_set/die3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/halloween_set/die4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/resources/halloween_set/die4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/followers.css" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/followers.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die0/angry.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die0/angry.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die0/bag.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die0/bag.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die0/bike.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die0/bike.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die0/bird.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die0/bird.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die0/crying.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die0/crying.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die0/moonandstars.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die0/moonandstars.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die1/caravan.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die1/caravan.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die1/clock.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die1/clock.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die1/drink.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die1/drink.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die1/mouth.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die1/mouth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die1/tulip.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die1/tulip.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die1/whale.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die1/whale.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die2/bus.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die2/bus.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die2/coffee.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die2/coffee.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die2/happy.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die2/happy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die2/letter.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die2/letter.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die2/paws.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die2/paws.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die2/plate.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die2/plate.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die3/baloon.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die3/baloon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die3/bananas.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die3/bananas.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die3/cat.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die3/cat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die3/icecream.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die3/icecream.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die3/pencil.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die3/pencil.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die3/phone.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die3/phone.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die4/bang.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die4/bang.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die4/car.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die4/car.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die4/fire.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die4/fire.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die4/hamburger.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die4/hamburger.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die4/hat.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die4/hat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die4/ladder.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die4/ladder.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die5/ball.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die5/ball.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die5/glasses.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die5/glasses.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die5/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die5/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die5/poo.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die5/poo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die5/rain.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die5/rain.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/basic_set/die5/sun.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/basic_set/die5/sun.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die0/bones.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die0/bones.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die0/ghost.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die0/ghost.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die0/grave.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die0/grave.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die0/jack-o-lantern.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die0/jack-o-lantern.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die0/spider.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die0/spider.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die0/witch.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die0/witch.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die1/bat.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die1/bat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die1/broomstick.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die1/broomstick.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die1/dagger.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die1/dagger.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die1/goblin.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die1/goblin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die1/spiderweb.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die1/spiderweb.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die1/zombie.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die1/zombie.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die2/cauldron.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die2/cauldron.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die2/coffin.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die2/coffin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die2/frankenstein.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die2/frankenstein.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die2/skull.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die2/skull.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die2/voodoo.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die2/voodoo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die2/werewolf.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die2/werewolf.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die3/devil.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die3/devil.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die3/monster.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die3/monster.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die3/mummy.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die3/mummy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die3/owl.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die3/owl.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die3/potion.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die3/potion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die3/scythe.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die3/scythe.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die4/cat.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die4/cat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die4/death.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die4/death.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die4/freddykrueger.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die4/freddykrueger.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die4/raven.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die4/raven.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/images/halloween_set/die4/vampire.png" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/images/halloween_set/die4/vampire.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/stories.css" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/stories.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/story_detail.css" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/static/css/story_detail.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_story.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/create_story.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/create_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/create_user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/filter_stories.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/filter_stories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/follower.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/follower.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/classes/tests/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/includes/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/stories.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/stories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/story_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/story_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/story_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/story_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user_not_found.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/user_not_found.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/users.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/wall.html" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/wall.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/templates/includes/footer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/classes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/restart_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/restart_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_email_sender.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_email_sender.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_follow.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_follow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_logout.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_logout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_new_story.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_new_story.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_random_story.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_random_story.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_reaction_counters.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_reaction_counters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_send_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_send_email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_signup.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_signup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_stories_api_gateway.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_stories_api_gateway.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_stories_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_stories_filter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_stories_reactions.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_stories_reactions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_story_detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_story_detail.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_wall.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/tests/test_wall.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/check_stories.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/check_stories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/follow.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/follow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/home.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/home.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/search.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/search.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/stories.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/stories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/tests/test_delete_stories.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/tests/test_delete_stories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/tests/test_stories.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/tests/test_stories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/wall.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_gateway/views/wall.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -14,7 +163,13 @@
   <component name="ProjectId" id="1TyaZGJK94nZKDlTxsjRoPTSYPX" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api_gateway" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -35,8 +190,8 @@
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -56,6 +211,9 @@
       <option name="presentableId" value="Default" />
       <updated>1574434842778</updated>
       <workItem from="1574434844333" duration="136000" />
+      <workItem from="1574636680545" duration="188000" />
+      <workItem from="1574636886355" duration="656000" />
+      <workItem from="1574680456776" duration="412000" />
     </task>
     <servers />
   </component>
@@ -67,10 +225,15 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/api_gateway$api_gateway.coverage" NAME="api_gateway Coverage Results" MODIFIED="1574637403679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

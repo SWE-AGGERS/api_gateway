@@ -53,6 +53,6 @@ def signup():
         else:
             form = UserForm()
 
-            return render_template('signup.html', form=form, error=True, message="The email was used before. Please change the email!" )
+            return render_template('signup.html', form=form, error=True, message="The email was used before. Please change the email!")
     if request.method == 'GET':
         return render_template('signup.html', form=form)
