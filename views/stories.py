@@ -9,13 +9,14 @@ from api_gateway.auth import admin_required, current_user
 from flask_login import (current_user, login_user, logout_user,
                          login_required)
 
-from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
+from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, \
+    FOLLOWERS_SERVICE_IP, FOLLOWERS_SERVICE_PORT
 from api_gateway.forms import UserForm, StoryForm, SelectDiceSetForm, StoryFilter
 from api_gateway.database import db, Story, Reaction, User
 from api_gateway.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
 from api_gateway.views.home import index
-from api_gateway.views.check_stories import check_storyV2, InvalidStory, TooLongStoryError, TooSmallStoryError, WrongFormatDiceError, WrongFormatSingleDiceError, WrongFormatSingleFaceError, WrongFormatStoryError
-from api_gateway.views.follow import _is_follower
+from api_gateway.views.check_stories import check_storyV2, InvalidStory, TooLongStoryError, TooSmallStoryError, \
+    WrongFormatDiceError, WrongFormatSingleDiceError, WrongFormatStoryError
 import re
 
 storiesbp = Blueprint('stories', __name__)
