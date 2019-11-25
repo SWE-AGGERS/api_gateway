@@ -156,24 +156,6 @@ def is_follower_s(user_a, user_b):
     body = json.loads(str(reply.data, 'utf8'))
     return body['follow']
 
-@storiesbp.route('/stories/reaction/<storyid>/<reactiontype>', methods=['GET'])
-@login_required
-def _reaction(storyid, reactiontype):
-
-    try:
-        url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/user/' + str(_id)
-        # TODO error
-        reply = request.get(url, timeout=1)
-        user = json.loads(str(reply.data, 'utf8'))
-
-        message = add_reaction(reacterid=current_user.id,
-                               storyid=storyid, reactiontype=reactiontype)
-        return jsonify({'reply': message, 'reaction': reactiontype, 'story_id': storyid})
-    except StoryNonExistsError as err_msg:
-        return _stories(error=True, res_msg=err_msg, info_bar=True)
-#
-# def add_reaction_s:
-#     url
 
 @storiesbp.route('/stories/<storyid>', methods=['GET'])
 def get_story_detail(storyid):
@@ -283,38 +265,6 @@ def get_filtered_stories(init_date, end_date):
     else:
         return None #Raise exception? #TODO
 
-
-
-def add_reaction(reacterid, storyid, reactiontype):
-    # check if story exist
-    q = Story.query.filter_by(id=storyid).first()
-    if q is None:
-        raise StoryNonExistsError('Story not exists!')
-
-    old_reaction = Reaction.query.filter_by(
-        user_id=reacterid, story_id=storyid).first()
-
-    if old_reaction is None:
-        new_reaction = Reaction()
-        new_reaction.user_id = reacterid
-        new_reaction.story_id = storyid
-        new_reaction.type = reactiontype
-        db.session.add(new_reaction)
-        db.session.commit()
-        message = 'Reaction created!'
-
-    else:
-        if int(reactiontype) == int(old_reaction.type):
-            message = 'Reaction removed!'
-            db.session.delete(old_reaction)
-            db.session.commit()
-        else:
-            old_reaction.type = reactiontype
-            db.session.commit()
-            message = 'Reaction changed!'
-        # # Update DB counters
-    res = update_reactions.delay(story_id=storyid)
-    return message
 
 
 class StoryNonExistsError(Exception):
