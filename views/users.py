@@ -7,6 +7,9 @@ from sqlalchemy import desc
 from api_gateway.views.follow import _is_follower
 from api_gateway.views.stories import reacted
 
+from api_gateway.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
+
+
 users = Blueprint('users', __name__)
 
 @users.route('/users')
