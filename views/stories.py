@@ -176,11 +176,16 @@ def _reaction(storyid, reactiontype):
 
 @storiesbp.route('/stories/<storyid>', methods=['GET'])
 def get_story_detail(storyid):
+    story = get_story_by_id(storyid)
+    return render_template("story_detail.html", story=story)
+
+
+def get_story_by_id(story_id):
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/' + str(storyid)
     reply = request.get(url, timeout=1)
     story =  json.loads(str(reply.data))
     if story["result"] == 1:
-        return render_template("story_detail.html", story=story["story"])
+        return story["story"]
     else:
         abort(404)
 
