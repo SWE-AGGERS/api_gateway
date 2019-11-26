@@ -1,8 +1,6 @@
-"""
 from flask import Blueprint, render_template
 
 from service.auth import current_user
-from service.database import db, Story
 
 from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT
 
@@ -25,12 +23,11 @@ def index():
 def get_story_by_author_id(author_id):
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/story_list/' + str(author_id)
     try:
-	    reply = request.get(url, timeout=1)
-	    story =  json.loads(str(reply.data))
-	    if story["result"] == 1:
-	        return story["story"]
-	    else:
-	        return None
-	except:
-		return None
-"""
+        reply = request.get(url, timeout=1)
+        story =  json.loads(str(reply.data))
+        if story["result"] == 1:
+            return story["story"]
+        else:
+            return None
+    except:
+        return None

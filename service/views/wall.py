@@ -6,7 +6,6 @@ from flask_login import login_required
 
 from service.classes.Stats import Stats
 from service.classes.User import User
-from service.classes.Wall import Wall
 from service.auth import current_user
 from service.forms import SelectDiceSetForm
 

@@ -7,11 +7,10 @@ from flask_login import (current_user, login_required)
 
 from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, DICE_SERVICE_IP, DICE_SERVICE_PORT
 from service.forms import StoryForm, SelectDiceSetForm, StoryFilter
-from service.database import db, Story, Reaction, User
+#from service.database import db, Story, Reaction, User
 from service.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
 from service.views.home import index
-from service.views.check_stories import check_storyV2, InvalidStory, TooLongStoryError, TooSmallStoryError, \
-    WrongFormatDiceError, WrongFormatSingleDiceError, WrongFormatStoryError
+#from service.views.check_stories import check_storyV2, InvalidStory, TooLongStoryError, TooSmallStoryError, WrongFormatDiceError, WrongFormatSingleDiceError, WrongFormatStoryError
 import re
 
 storiesbp = Blueprint('stories', __name__)
@@ -147,7 +146,7 @@ def get_users_s(_id):
     return user
 
 def is_follower_s(user_a, user_b):
-    check if user_a follow user_b
+    #check if user_a follow user_b
     reply = request.get('http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT +\
                         '/is_follower/' + user_a + '/' + user_b, timeout=1)
     body = json.loads(str(reply.data, 'utf8'))
@@ -199,7 +198,7 @@ def _roll(dicenumber, dicesetid):
         return _stories("<div class=\"alert alert-danger alert-dismissible fade show\">" +
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" +
                         "<strong>Error!</strong> Wrong dice number!</div>")
-    elif(roll_info["message"] == "Dice set " + str(dicesetid) " doesn't exist!" ):
+    elif(roll_info["message"] == "Dice set " + str(dicesetid) + " doesn't exist!" ):
         abort(404)
 
 
@@ -270,7 +269,7 @@ def get_filtered_stories(init_date, end_date):
     reply = json.loads(str(reply.data))
     if reply["result"] == 1:
         return reply["stories"]
-    elif reply["result"] == 0
+    elif reply["result"] == 0:
         return []
     else:
         return None #Raise exception? #TODO
@@ -303,7 +302,7 @@ def remove_story(story_id, page):
         message = 'The story has been canceled.'
         if page == 'stories':
             return redirect('/stories')
-        else
+        else:
             return index()
     else:
         # NOT Removed correctly
