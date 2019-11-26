@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d64d3c32-fed7-40e8-a6b8-90f8820cb91d" name="Default Changelist" comment="story_list template for">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/background.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/database.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/storytellers.db" beforeDir="false" />
+    <list default="true" id="d64d3c32-fed7-40e8-a6b8-90f8820cb91d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/service/templates/story_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/service/templates/story_list.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,8 +79,16 @@
       <workItem from="1574682330265" duration="372000" />
       <workItem from="1574682755433" duration="1170000" />
       <workItem from="1574690873584" duration="7879000" />
-      <workItem from="1574756374675" duration="930000" />
+      <workItem from="1574756374675" duration="1045000" />
     </task>
+    <task id="LOCAL-00001" summary="update story_list for new API">
+      <created>1574757363922</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1574757363922</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,6 +106,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update story_list for new API" />
+    <option name="LAST_COMMIT_MESSAGE" value="update story_list for new API" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/api_gateway$api_gateway.coverage" NAME="api_gateway Coverage Results" MODIFIED="1574718097156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
