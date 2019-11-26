@@ -7,6 +7,7 @@ from service.constants import LOGIN_URL, SIGNUP_URL
 import requests
 from flask import request
 from service.constants import USERS_SERVICE_IP, USERS_SERVICE_PORT
+from service.constants import TIMEOUT
 import requests
 from requests import Timeout
 import json
@@ -15,6 +16,7 @@ from service.auth import  current_user
 
 
 auth = Blueprint('auth', __name__)
+
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -54,7 +56,7 @@ def signup():
     if request.method == 'POST':
 
 
-        error = signup(firstname = form.data['firstname'], lastname = form.data['lastname'], email = form.data['email'], year = form.data.date[2], month = form.data.date[1], day = form.data.date[0], password = form.data['password'])
+        error = signup(firstname = form.data['firstname'], lastname = form.data['lastname'], email = form.data['email'], year = form.data['dateofbirth'].date[2], month = form.data['dateofbirth'].date[1], day = form.data['dateofbirth'].date[0], password = form.data['password'],timeout = TIMEOUT)
         if error != None:
             if not error:
                 login_support(form.email.data,form.password.data)
@@ -74,7 +76,7 @@ def signup():
 def login_support(email, password):
     try:
         url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/login'
-        reply = requests.get(url, data=json.dumps({'email': email, 'password': password}), content_type='application/json')
+        reply = requests.get(url, data=json.dumps({'email': email, 'password': password}), content_type='application/json',timeout = TIMEOUT)
         json_data = reply.json()
         return json_data['response']
     except Timeout:
@@ -86,7 +88,7 @@ def login_support(email, password):
 def logout_support(user_id):
     try:
         url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/logout/'
-        reply = requests.get(url,data=json.dumps({'user_di': user_id}), content_type='application/json')
+        reply = requests.get(url,data=json.dumps({'user_di': user_id}), content_type='application/json',timeout = TIMEOUT)
         json_data = reply.json()
         return json_data['response']
     except Timeout:
