@@ -1,6 +1,5 @@
 import functools
 from flask_login import current_user, LoginManager
-from service.database import User
 
 login_manager = LoginManager()
 
@@ -18,6 +17,7 @@ def admin_required(func):
 
 @login_manager.user_loader
 def load_user(user_id):
+
     user = User.query.get(user_id)
     print("Test")
     if user is not None:

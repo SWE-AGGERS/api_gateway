@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d64d3c32-fed7-40e8-a6b8-90f8820cb91d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/service/templates/story_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/service/templates/story_list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/classes/User.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/auth.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
