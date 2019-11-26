@@ -1,10 +1,12 @@
-"""
 from flask import Blueprint, render_template
 from flask import request
-from service.database import User, Story
-from service.auth import current_user
-from service.database import db, Story
-from sqlalchemy import func
+import json
+import requests
+from requests import Timeout
+from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
+
+
+
 
 search = Blueprint('search', __name__)
 
@@ -15,7 +17,7 @@ def index():
     if search_text:
         users = find_user(text=search_text)
         stories = find_story(text=search_text)
-        if users and stories:
+        if users and len(stories) > 0:
             return render_template("search.html", users=users, stories=stories)
         elif users:
             return render_template("search.html", users=users)
@@ -26,32 +28,25 @@ def index():
     else:
         return render_template("search.html")
 
-"""
-""" 
+
 def find_user(text):
-    parameters = text.split()
-    users = []
-
-    if len(parameters) == 2:
-        r1 = User.query.filter(func.lower(User.firstname) == func.lower(parameters[0]))
-        for user in r1:
-            users.append(user)
-        r2 = User.query.filter(func.lower(User.lastname) == func.lower(parameters[1]))
-        for user in r2:
-            users.append(user)
-
-    elif len(parameters) == 1:
-        r1 = User.query.filter(func.lower(User.firstname) == func.lower(parameters[0]))
-        for user in r1:
-            users.append(user)
-        r2 = User.query.filter(func.lower(User.lastname) == func.lower(parameters[0]))
-        for user in r2:
-            users.append(user)
-
-    return users if len(users) > 0 else None
+    try:
+        url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/search/'+text
+        reply = requests.get(url)
+        json_data = reply.json()
+        return json_data
+    except Timeout:
+        return None
 
 
 def find_story(text):
-    result = Story.query.filter(func.lower(Story.text).contains(func.lower(text)))
-    return result if result.count() > 0 else None
-"""
+    try:
+        url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/search_story'
+        reply = requests.get(url,data=json.dumps({"story": {"text": text}}),content_type='application/json')
+        json_data = reply.json()
+        if json_data['result'] == 1:
+            return json_data['stories']
+        else:
+            return []
+    except Timeout:
+        return []
