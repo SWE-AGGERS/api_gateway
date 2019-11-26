@@ -6,6 +6,14 @@ from service.forms import UserForm
 from service.constants import LOGIN_URL, SIGNUP_URL
 import requests
 from flask import request
+from service.constants import USERS_SERVICE_IP, USERS_SERVICE_PORT
+import requests
+from requests import Timeout
+import json
+from service.auth import  current_user
+
+
+
 auth = Blueprint('auth', __name__)
 
 
@@ -16,27 +24,12 @@ def login():
     error = False
 
     if form.validate_on_submit():
-        url = LOGIN_URL
-        data = {"email": form.email.data, "password": form.password.data}
-        headers = {'Content-type': 'application/json; charset=UTF-8'}
 
-        call_user = requests.post(url, json=data,headers=headers)
+        call_user = login_support(form.email.data,form.password.data)
+
         print(call_user.json()["response"])
 
         if call_user.json()["response"]:
-            json_data = call_user.json()
-
-            user = User(user_id=json_data["user_id"],
-                        firstname=json_data["firstname"],
-                        lastname=json_data["lastname"],
-                        email=json_data["email"],
-                        dateofbirth=json_data["dateofbirth"],
-                        token=json_data["auth_token"],
-                        is_active=json_data["is_active"],
-                        is_admin=json_data["is_admin"],
-                        authenticated=json_data["is_authenticated"]
-                        )
-            login_user(user)
             return redirect('/')
         else:
             message = "User not found"
@@ -47,8 +40,10 @@ def login():
 
 @auth.route("/logout")
 def logout():
-    logout_user()
-    return redirect('/')
+    call_user = logout_support(current_user.id)
+
+    if call_user.json()["response"]:
+        return redirect('/')
 
 
 @auth.route("/signup", methods=['POST', 'GET'])
@@ -58,38 +53,62 @@ def signup():
 
     if request.method == 'POST':
 
-        headers = {'Content-type': 'application/json; charset=UTF-8'}
-        date = "{}".format(form.data["dateofbirth"]).split("-")
-        data = {
-                "firstname" : form.data['firstname'],
-                "lastname": form.data['lastname'],
-                "email" : form.data["email"],
-                "dateofbirth": {
-                    "year": date[2],
-                    "month": date[1],
-                    "day": date[0]
-                },
-                "password": form.data["password"]
-                }
-        singup_request = requests.post(SIGNUP_URL, json=data, headers=headers)
-        data = singup_request.json()
-        print(data)
-        if not singup_request.json()["error"]:
-            user = User(user_id=data["user_id"],
-                        firstname=data["firstname"],
-                        lastname=data["lastname"],
-                        email=data["email"],
-                        dateofbirth=data["dateofbirth"],
-                        token=data["auth_token"],
-                        is_active=data["is_active"],
-                        is_admin=data["is_admin"],
-                        authenticated=data["is_authenticated"]
-                        )
-            login_user(user)
-            return redirect("/")
+
+        error = signup(firstname = form.data['firstname'], lastname = form.data['lastname'], email = form.data['email'], year = form.data.date[2], month = form.data.date[1], day = form.data.date[0], password = form.data['password'])
+        if error != None:
+            if not error:
+                login_support(form.email.data,form.password.data)
+                return redirect("/")
+            else:
+                form = UserForm()
+                return render_template('signup.html', form=form, error=True, message="The email was used before. Please change the email!")
         else:
             form = UserForm()
+            return render_template('signup.html', form=form, error=True,
+                                   message="Timeout user service")
 
-            return render_template('signup.html', form=form, error=True, message="The email was used before. Please change the email!")
     if request.method == 'GET':
         return render_template('signup.html', form=form)
+
+
+def login_support(email, password):
+    try:
+        url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/login'
+        reply = requests.get(url, data=json.dumps({'email': email, 'password': password}), content_type='application/json')
+        json_data = reply.json()
+        return json_data['response']
+    except Timeout:
+        return None
+
+
+
+
+def logout_support(user_id):
+    try:
+        url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/logout/'
+        reply = requests.get(url,data=json.dumps({'user_di': user_id}), content_type='application/json')
+        json_data = reply.json()
+        return json_data['response']
+    except Timeout:
+        return None
+
+
+def signup_support(firstname, lastname, email, year, month, day, password):
+    try:
+        url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/login'
+        user = {
+            "firstname": firstname,
+            "lastname": lastname,
+            "email": email,
+            "dateofbirth": {
+                "year": year,
+                "month": month,
+                "day": day
+            },
+            "password": password
+        }
+        reply = requests.get(url, data=json.dumps(user), content_type='application/json')
+        json_data = reply.json()
+        return json_data['error']
+    except Timeout:
+        return None
