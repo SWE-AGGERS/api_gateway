@@ -106,6 +106,13 @@ def render_wall(user_id):
         return rend
 
     stats = Stats(stats_js)
+    user_js = stats.user
+    user: User = User(
+        user_id=user_js['user_id'],
+        firstname=user_js['firstname'],
+        lastname=user_js['lastname'],
+        email=user_js['email']
+    )
 
     try:
         reply = requests.get(ENDPOINT_STORIES + str(user_id))
@@ -122,7 +129,7 @@ def render_wall(user_id):
             error=True,
             info_bar=False,
             res_msg=str(''),
-            user=User(),
+            user=user,
             stats=Stats({})
         )
         return rend
@@ -140,7 +147,7 @@ def render_wall(user_id):
         error=False,
         info_bar=False,
         res_msg=str(''),
-        user=stats['user'],
+        user=user,
         stats=stats
     )
 
