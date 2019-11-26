@@ -171,6 +171,9 @@ def get_story_by_id(story_id):
 
 
 def get_roll(dicenumber, dicesetid):
+     """
+    Calls the DiceManagement service in order to roll <dicenumber> from the dice set <dicesetid>
+    """
     url = 'http://' + DICE_SERVICE_IP + ':' + DICE_SERVICE_PORT + '/rolldice' + str(dicenumber) + '/' + str(dicesetid)
     reply = request.get(url)
     roll = json.loads(str(reply.data))
