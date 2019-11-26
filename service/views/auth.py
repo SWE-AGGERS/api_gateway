@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect
 from flask_login import (current_user, login_user, logout_user, login_required)
-from service.database import db, User
+from service.classes.User import  User
 from service.forms import LoginForm
 from service.forms import UserForm
-from service.constants import USERS_SERVICE_IP, USERS_SERVICE_PORT
+from service.constants import USERS_SERVICE_IP, USERS_SERVICE_PORT, LOGIN_URL, SIGNUP_URL
 import requests
 from flask import request
 auth = Blueprint('auth', __name__)
@@ -16,15 +16,26 @@ def login():
     error = False
 
     if form.validate_on_submit():
-        url = "http://{}:{}/login".format(USERS_SERVICE_IP, USERS_SERVICE_PORT)
+        url = LOGIN_URL
         data = {"email": form.email.data, "password": form.password.data}
         headers = {'Content-type': 'application/json; charset=UTF-8'}
 
         call_user = requests.post(url, json=data,headers=headers)
+        print(call_user.json()["response"])
 
-        if call_user.json["response"]:
-            user = User()
-            user.id = call_user.json()["user_id"]
+        if call_user.json()["response"]:
+            json_data = call_user.json()
+
+            user = User(user_id=json_data["user_id"],
+                        firstname=json_data["firstname"],
+                        lastname=json_data["lastname"],
+                        email=json_data["email"],
+                        dateofbirth=json_data["dateofbirth"],
+                        token=json_data["auth_token"],
+                        is_active=json_data["is_active"],
+                        is_admin=json_data["is_admin"],
+                        authenticated=json_data["is_authenticated"]
+                        )
             login_user(user)
             return redirect('/')
         else:
@@ -44,36 +55,40 @@ def logout():
 def signup():
 
     form = UserForm()
+
     if request.method == 'POST':
-        email = form.data['email']
-
-
-        url = "http://{}:{}/login".format(USERS_SERVICE_IP, USERS_SERVICE_PORT)
 
         headers = {'Content-type': 'application/json; charset=UTF-8'}
-        user = User()
-        user.firstname = form.data['firstname']
-        user.lastname = form.data['lastname']
-        user.email = form.data['email']
-        user.dateofbirth = form.data['dateofbirth']
-        user.set_password(form.data['password'])
+        date = "{}".format(form.data["dateofbirth"]).split("/")
 
-        data ={
-                "firstname" : user.firstname,
-                "lastname": user.lastname,
-                "email" : user.email,
-                "dateofbirth":{
-                    "year": user.dateofbirth.year,
-                    "month":user.dateofbirth.month ,
-                    "day":user.dateofbirth.day
+        data = {
+                "firstname" : form.data['firstname'],
+                "lastname": form.data['lastname'],
+                "email" : form.data["email"],
+                "dateofbirth": {
+                    "year": date[2],
+                    "month": date[1],
+                    "day": date[0]
                 },
-                "password": form.data['password']
+                "password": form.data["password"]
                 }
 
-        call_user = requests.post(url, json=data,headers=headers)
+        call_user = requests.post(SIGNUP_URL, json=data,headers=headers)
 
-        if not call_user.json()["error"]:
+        if not call_user.json()["response"]:
+            data = call_user.json()
+            user = User(user_id=data["user_id"],
+                        firstname=data["firstname"],
+                        lastname=data["lastname"],
+                        email=data["email"],
+                        dateofbirth=data["dateofbirth"],
+                        token= data["auth_token"],
+                        is_active=data["is_active"],
+                        is_admin=data["is_admin"],
+                        authenticated=data["is_authenticated"]
+                        )
             user.id = call_user.json()["user_id"]
+
             login_user(user)
             return redirect("/")
         else:

@@ -1,4 +1,4 @@
-class User():
+class User:
 
     def __init__(self, user_id, firstname, lastname, email, is_active, is_admin, dateofbirth, token, authenticated):
       self.id = user_id

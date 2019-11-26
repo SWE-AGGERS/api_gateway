@@ -1,6 +1,5 @@
 from flask import Flask
 from service.auth import login_manager
-from service.database import db, User, Story
 from service.views import blueprints
 import datetime
 

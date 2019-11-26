@@ -1,3 +1,4 @@
+"""
 from flask import Blueprint, render_template
 from flask import request
 from service.database import User, Story
@@ -25,7 +26,8 @@ def index():
     else:
         return render_template("search.html")
 
-
+"""
+""" 
 def find_user(text):
     parameters = text.split()
     users = []
@@ -52,3 +54,4 @@ def find_user(text):
 def find_story(text):
     result = Story.query.filter(func.lower(Story.text).contains(func.lower(text)))
     return result if result.count() > 0 else None
+"""

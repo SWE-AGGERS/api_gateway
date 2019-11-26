@@ -4,6 +4,6 @@ from .auth import auth
 #from .stories import storiesbp
 #from .users import users
 #from .wall import wall
-from .search import search
+#rom .search import search
 
-blueprints = [auth, search]
+blueprints = [auth]
