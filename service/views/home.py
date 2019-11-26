@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
-
 from service.auth import current_user
+import requests
 
 from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT
 
@@ -20,6 +20,8 @@ def index():
         stories = []
     return render_template("index.html", stories=stories, active_button="index")
 
+
+
 def get_story_by_author_id(author_id):
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/story_list/' + str(author_id)
     try:
@@ -31,3 +33,4 @@ def get_story_by_author_id(author_id):
             return []
     except:
         return []
+
