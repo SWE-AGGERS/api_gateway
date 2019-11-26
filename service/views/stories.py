@@ -168,7 +168,7 @@ def get_story_by_id(story_id):
     else:
         abort(404)
 
-
+ # TODO
 @storiesbp.route('/rolldice/<dicenumber>/<dicesetid>', methods=['GET'])
 def _roll(dicenumber, dicesetid):
     form = StoryForm()
@@ -193,15 +193,16 @@ def _roll(dicenumber, dicesetid):
     return render_template("create_story.html", form=form, set=dicesetid, roll=roll, phrase=phrase)
 
 
+
 @storiesbp.route('/stories/random', methods=['GET'])
 def random_story():
     try:
         random_story = get_random_story()
     except:
-        random_story = get_stories_s()[0]
+        random_story = Story()
     #return None # TODO: which return is the right one?
     #return redirect('/stories/'+str(random_story_from_db.id))
-    return render_template("story_detail.html", story=random_story_from_db)
+    return render_template("story_detail.html", story=random_story)
 
 def get_random_story():
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/random'
