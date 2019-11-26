@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, jsonify
 from flask_login import login_required
 
 from service.classes.Stats import Stats
+from service.classes.Stories import Stories
 from service.classes.User import User
 from service.auth import current_user
 from service.forms import SelectDiceSetForm
@@ -133,14 +134,14 @@ def render_wall(user_id):
         )
         return rend
 
-    stories = body['stories']
+    stories = Stories(reply.data)
 
     if body['result'] < 1:
         rend = render_template(
             "wall.html",
             message=body['message'],
             form=form,
-            stories=stories,
+            stories=stories.storylist,
             active_button="stories",
             like_it_url="/stories/reaction",
             details_url="/stories",

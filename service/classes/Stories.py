@@ -39,7 +39,7 @@ class Story(dict):
 class Stories(dict):
     storylist:list
 
-    def __init__(self, jpayload: json):
+    def __init__(self, jpayload: bytes):
         super().__init__()
         self.storylist = []
         if jpayload is None:
