@@ -15,9 +15,9 @@ def _strava_auth_url(config):
 @home.route('/')
 def index():
     if current_user is not None and hasattr(current_user, 'id'):
-        stories = dget_story_by_author_id(current_user.id)
+        stories = get_story_by_author_id(current_user.id)
     else:
-        stories = None
+        stories = []
     return render_template("index.html", stories=stories, active_button="index")
 
 def get_story_by_author_id(author_id):
@@ -28,6 +28,6 @@ def get_story_by_author_id(author_id):
         if story["result"] == 1:
             return story["story"]
         else:
-            return None
+            return []
     except:
-        return None
+        return []
