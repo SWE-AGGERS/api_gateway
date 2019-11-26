@@ -1,47 +1,103 @@
-{% if current_user.is_authenticated %}
-    {% extends "layout.html" %}
-    {% block title %}
-        Index Page
-    {% endblock %}
-
-    {% block content %}
-        <h1>Storytellers</h1>
-        Hi {{ current_user.firstname }}! <a href="/logout">Logout</a>
-
-
-        <h2>Your Stories</h2>
-
-        {% for story in stories %}
-            <div>
-                <li>
-                    {{ story.text }} -- Likes:{{ story.likes }} -- <a href="#myModal{{ story.id }}" class="trigger-btn" data-toggle="modal">Delete story</a>
-                    <div id="myModal{{ story.id }}" class="modal fade">
-                        <div class="modal-dialog modal-confirm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Delete story</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Do you really want to delete this story? This process cannot be undone.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
-                                    <div class="remove_story inline">
-                                        <form method="POST" action="/stories/{{ story.id }}/remove/index">
-                                            <button type="submit" class="btn btn-info">Delete</button>
-                                        </form>
+<html lang="en">
+<head>
+  <title>Dice with Microservices</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 100%;
+  }
+  </style>
+</head>
+<body>
+        {% if current_user.is_authenticated %}
+        {% extends "layout.html" %}
+        {% block title %}
+            Index Page
+        {% endblock %}
+    
+        {% block content %}
+            <h1>Storytellers</h1>
+            Hi {{ current_user.firstname }}! <a href="/logout">Logout</a>
+    
+    
+            <h2>Your Stories</h2>
+    
+            {% for story in stories %}
+                <div>
+                    <li>
+                        {{ story.text }} -- Likes:{{ story.likes }} -- <a href="#myModal{{ story.id }}" class="trigger-btn" data-toggle="modal">Delete story</a>
+                        <div id="myModal{{ story.id }}" class="modal fade">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Delete story</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Do you really want to delete this story? This process cannot be undone.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                        <div class="remove_story inline">
+                                            <form method="POST" action="/stories/{{ story.id }}/remove/index">
+                                                <button type="submit" class="btn btn-info">Delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-            </div>
-        {% endfor %}
+                    </li>
+                </div>
+            {% endfor %}
+    
+        {% endblock %}
+    {% else %}
+    
+        <div class="jumbotron">
+            <h1>Dice with Microservices</h1>
+            <p>Join the community and share your stories!</p>
+      </div>
+      <div id="demo" class="carousel slide" data-ride="carousel">
 
-    {% endblock %}
-{% else %}
-    Hi Anonymous, <a href="/login">Log in</a> or <a href="/signup"> signup</a>
-{% endif %}
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active"></li>
+              <li data-target="#demo" data-slide-to="1"></li>
+              <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+            
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{{ url_for('static', filename = 'dice.jpg') }}" alt="Dice" width="1100" height="500">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename = 'storytelling.jpg') }}" alt="Storytelling" width="1100" height="500">>
+              </div>
+              <div class="carousel-item">
+                    <img src="{{ url_for('static', filename = 'community.jpg') }}" alt="Community" width="1100" height="500">
+              </div>
+            </div>
+            
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </a>
+          </div>
+          <div>
+              <h5>Enjoy all these features: <a href="/login">Log in</a> or <a href="/signup"> signup</a>!</h5>
+          </div>
+    {% endif %}
+</body>
 
