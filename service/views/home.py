@@ -14,11 +14,12 @@ def _strava_auth_url(config):
 
 @home.route('/')
 def index():
+    return render_template("index.html", active_button="index")
     if current_user is not None and hasattr(current_user, 'id'):
         stories = get_story_by_author_id(current_user.id)
     else:
         stories = None
-    return render_template("index.html", stories=stories, active_button="index")
+    #return render_template("index.html", stories=stories, active_button="index")
 
 
 

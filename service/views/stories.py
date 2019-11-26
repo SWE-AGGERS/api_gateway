@@ -33,6 +33,7 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             message = body['message']
         else:
             message = "Error connecting with stories service"
+        """
         allstories = list(
             map(lambda x: (
                 x[0],
@@ -42,11 +43,12 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
                 reacted(current_user.id, x[0].id)
             ), body['stories'])
         )
+        """
         return render_template(
             "stories.html",
             message=message,
             form=form,
-            stories=allstories,
+            stories=body['stories'],
             active_button="stories",
             like_it_url="/stories/reaction",
             details_url="/stories",
@@ -61,7 +63,7 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
         for _id in list(map(lambda story: story['author_id'], stories)):
             user = get_users_s(str(_id))
             users.append(user)
-
+        """W
         allstories = list(
             map(lambda x: (
                 x[0],
@@ -71,12 +73,12 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
                 reacted(current_user.id, x[0]['id'])
             ), zip(stories, users))
         )
-
+        """
         return render_template(
             "stories.html",
             message=message,
             form=form,
-            stories=allstories,
+            stories=stories,
             active_button="stories",
             like_it_url="/stories/reaction",
             details_url="/stories",
@@ -195,6 +197,7 @@ def filter_stories():
             end_date = form.end_date.data
             f_stories = get_filtered_stories(init_date, end_date)
             if f_stories is not None:
+                """
                 f_stories = list(
                     map(lambda x: (
                         x[0],
@@ -213,6 +216,7 @@ def filter_stories():
                                        info_bar=False,
                                        current_user=current_user.id
                                        )
+                """
         else:
             return render_template('filter_stories.html',
                                    form=form,

@@ -9,7 +9,7 @@ from service.classes.User import User
 from service.auth import current_user
 from service.forms import SelectDiceSetForm
 
-from service.views.stories import reacted
+#from service.views.stories import reacted
 
 ENDPOINT_STATS = 'http://localhost:5004/stats/'
 
