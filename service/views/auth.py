@@ -3,7 +3,7 @@ from flask_login import (current_user, login_user, logout_user, login_required)
 from service.classes.User import  User
 from service.forms import LoginForm
 from service.forms import UserForm
-from service.constants import USERS_SERVICE_IP, USERS_SERVICE_PORT, LOGIN_URL, SIGNUP_URL
+from service.constants import LOGIN_URL, SIGNUP_URL
 import requests
 from flask import request
 auth = Blueprint('auth', __name__)
@@ -59,8 +59,7 @@ def signup():
     if request.method == 'POST':
 
         headers = {'Content-type': 'application/json; charset=UTF-8'}
-        date = "{}".format(form.data["dateofbirth"]).split("/")
-
+        date = "{}".format(form.data["dateofbirth"]).split("-")
         data = {
                 "firstname" : form.data['firstname'],
                 "lastname": form.data['lastname'],
@@ -72,23 +71,20 @@ def signup():
                 },
                 "password": form.data["password"]
                 }
-
-        call_user = requests.post(SIGNUP_URL, json=data,headers=headers)
-
-        if not call_user.json()["response"]:
-            data = call_user.json()
+        singup_request = requests.post(SIGNUP_URL, json=data, headers=headers)
+        data = singup_request.json()
+        print(data)
+        if not singup_request.json()["error"]:
             user = User(user_id=data["user_id"],
                         firstname=data["firstname"],
                         lastname=data["lastname"],
                         email=data["email"],
                         dateofbirth=data["dateofbirth"],
-                        token= data["auth_token"],
+                        token=data["auth_token"],
                         is_active=data["is_active"],
                         is_admin=data["is_admin"],
                         authenticated=data["is_authenticated"]
                         )
-            user.id = call_user.json()["user_id"]
-
             login_user(user)
             return redirect("/")
         else:
