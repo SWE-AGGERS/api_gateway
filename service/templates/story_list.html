@@ -57,13 +57,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 <script type="text/javascript">
   function react(button, story_id, react_type, token_jwt, reacter) {
-      let REACTIONS_SERVICE_IP = '0.0.0.0';
-      let REACTIONS_SERVICE_PORT = '5005';
       $.ajax({
       dataType: 'json',
       type: "POST",
-      url: REACTIONS_SERVICE_IP + ":" + REACTIONS_SERVICE_PORT +
-          "/reactions/" + story_id + "/" + react_type +  "/" + reacter,
+      url: "http://172.20.0.1:5005/reactions/" + story_id + "/" + react_type +  "/" + reacter,
       beforeSend: function (xhr) {   //Include the bearer token in header
         xhr.setRequestHeader("Authorization", 'Bearer '+ token_jwt);
       },

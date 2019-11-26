@@ -2,7 +2,7 @@ from flask import abort, json
 from flask import Blueprint, render_template, request
 from requests.exceptions import Timeout
 from flask_login import (current_user, login_required)
-from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, DICE_SERVICE_IP, DICE_SERVICE_PORT
+from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, DICE_SERVICE_IP, DICE_SERVICE_PORT, REACTIONS_SERVICE_IP, REACTIONS_SERVICE_PORT
 from service.forms import StoryForm, SelectDiceSetForm, StoryFilter
 from service.views.home import index
 import requests
@@ -127,7 +127,7 @@ def get_story_by_id(story_id):
 
 
 def get_roll(dicenumber, dicesetid):
-     """
+    """
     Calls the DiceManagement service in order to roll <dicenumber> from the dice set <dicesetid>
     """
     url = 'http://' + DICE_SERVICE_IP + ':' + DICE_SERVICE_PORT + '/rolldice' + str(dicenumber) + '/' + str(dicesetid)
@@ -287,12 +287,7 @@ def call_remove_story_s(story_id, user_id):
     body = json.loads(str(reply.data, 'utf8'))
     return body
 
-"""
-def reacted(user_id, story_id):
-    q = db.session.query(Reaction).filter_by(
-        story_id=story_id, user_id=user_id).all()
 
-    if len(q) > 0:
-        return q[0].type
-    return 0
-"""
+def reacted(user_id, story_id):
+    url = 'http://' + REACTIONS_SERVICE_IP + ':' + REACTIONS_SERVICE_PORT + '/reacted_on/'+ story_id + '/' + user_id
+
