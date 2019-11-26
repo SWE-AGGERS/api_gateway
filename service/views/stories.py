@@ -293,13 +293,13 @@ def remove_story(story_id, page):
         # ? remove reactions of story_id ?
         message = 'The story has been canceled.'
         if page == 'stories':
-            return _stories(message=message)
+            return redirect('/stories')
         else
             return index()
     else:
         # NOT Removed correctly
         message = 'The story was written by another user and cannot be deleted.'
-        return _stories(message=message)
+        return redirect('/stories')
     
 
 
