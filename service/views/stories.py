@@ -82,8 +82,7 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
                 x[0],
                 x[1],
                 "hidden" if x[1].id == current_user.id else "",
-                "unfollow" if _is_follower(
-                    current_user.id, x[1].id) else "follow",
+                "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                 reacted(current_user.id, x[0].id)
             ), allstories)
         )
@@ -232,8 +231,7 @@ def filter_stories():
                         x[0],
                         x[1],
                         "hidden" if x[1]["id"] == current_user.id else "",
-                        "unfollow" if _is_follower(
-                            current_user.id, x[1]["id"]) else "follow",
+                        "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                         reacted(current_user.id, x[0]["id"])
                     ), f_stories))
                 return render_template('filter_stories.html',
@@ -313,8 +311,7 @@ def get_remove_story(storyid,page):
                         x[0],
                         x[1],
                         "hidden" if x[1].id == current_user.id else "",
-                        "unfollow" if _is_follower(
-                            current_user.id, x[1].id) else "follow",
+                        "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                         reacted(current_user.id, x[0].id)
                     ), allstories)
                 )
@@ -349,8 +346,7 @@ def get_remove_story(storyid,page):
                     x[0],
                     x[1],
                     "hidden" if x[1].id == current_user.id else "",
-                    "unfollow" if _is_follower(
-                        current_user.id, x[1].id) else "follow",
+                    "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                     reacted(current_user.id, x[0].id)
                 ), allstories)
             )
