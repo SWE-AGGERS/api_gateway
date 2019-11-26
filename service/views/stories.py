@@ -1,5 +1,3 @@
-"""
-
 from flask import abort, json
 
 from flask import Blueprint, render_template, request
@@ -19,6 +17,7 @@ storiesbp = Blueprint('stories', __name__)
 
 
 @storiesbp.route('/stories', methods=['POST', 'GET'])
+@login_required
 def _stories(message='', error=False, res_msg='', info_bar=False):
     # TODO delete
     current_user.id = 1
@@ -98,7 +97,8 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             details_url="/stories",
             error=error,
             info_bar=info_bar,
-            res_msg=str(res_msg)
+            res_msg=str(res_msg),
+            current_user=current_user.id
         )
     elif 'GET' == request.method:
         stories = get_stories_s()
@@ -127,7 +127,8 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             details_url="/stories",
             error=error,
             info_bar=info_bar,
-            res_msg=str(res_msg)
+            res_msg=str(res_msg),
+            current_user=current_user.id
         )
 
 
@@ -195,10 +196,13 @@ def _roll(dicenumber, dicesetid):
 
 @storiesbp.route('/stories/random', methods=['GET'])
 def random_story():
-    random_story = get_random_story()
-    return None # TODO: which return is the right one?
+    try:
+        random_story = get_random_story()
+    except:
+        random_story = get_stories_s()[0]
+    #return None # TODO: which return is the right one?
     #return redirect('/stories/'+str(random_story_from_db.id))
-    #return render_template("story_detail.html", story=random_story_from_db)
+    return render_template("story_detail.html", story=random_story_from_db)
 
 def get_random_story():
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/random'
@@ -239,7 +243,8 @@ def filter_stories():
                                        like_it_url="/stories/reaction",
                                        details_url="/stories",
                                        error=False,
-                                       info_bar=False
+                                       info_bar=False,
+                                       current_user=current_user.id
                                        )
         else:
             return render_template('filter_stories.html',
@@ -326,7 +331,8 @@ def get_remove_story(storyid,page):
                     details_url="/stories",
                     error=error,
                     info_bar=info_bar,
-                    res_msg=str(res_msg)
+                    res_msg=str(res_msg),
+                    current_user=current_user.id
                 )
             else:
                 return index()
@@ -361,10 +367,10 @@ def get_remove_story(storyid,page):
                 details_url="/stories",
                 error=error,
                 info_bar=info_bar,
-                res_msg=str(res_msg)
+                res_msg=str(res_msg),
+                current_user=current_user.id
             )
 
     else:
         # Story doensn't exist
         abort(404)
-"""
