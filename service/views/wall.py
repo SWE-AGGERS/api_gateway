@@ -135,6 +135,24 @@ def render_wall(user_id):
 
     stories = body['stories']
 
+    if body['result'] < 1:
+        rend = render_template(
+            "wall.html",
+            message=body['message'],
+            form=form,
+            stories=stories,
+            active_button="stories",
+            like_it_url="/stories/reaction",
+            details_url="/stories",
+            error=True,
+            info_bar=False,
+            res_msg=str(''),
+            user=user,
+            stats=stats
+        )
+
+        return rend
+
     rend = render_template(
         "wall.html",
         message='',
@@ -151,35 +169,3 @@ def render_wall(user_id):
     )
 
     return rend
-
-
-@wall.route('/thewall/<user_id>', methods=['GET'])
-@login_required
-def getawall(user_id):
-    # if user_id < 0:
-    #     return User_not_found()
-    q = db.session.query(User).filter(User.id == user_id)
-    user = q.first()
-    if user is None:
-        return User_not_found()
-
-    q = db.session.query(Story).filter(Story.author_id == user.id)
-    thewall: Wall = Wall(user)
-    user_stories = []
-    for s in q:
-        s: Story
-        thewall.add_story(s)
-        user_stories.append(
-            {'story_id': s.id,
-             'text': s.text,
-             'likes': s.likes,
-             'dislikes': s.dislikes
-             })
-        #user_stories.append(s)
-
-    return jsonify(firstname=user.firstname,
-                   lastname=user.lastname,
-                   id=user.id,
-                   email=user.email,
-                   stories=user_stories) # thewall.stories
-
