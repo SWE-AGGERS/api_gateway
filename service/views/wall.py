@@ -1,15 +1,19 @@
-"""
+import json
+
+import requests
 from flask import Blueprint, render_template, jsonify
 from flask_login import login_required
 
 from service.classes.Stats import Stats
-from service.classes.Wall import Wall
-from service.database import db, Story, User
+from service.classes.User import User
 from service.auth import current_user
 from service.forms import SelectDiceSetForm
 
-from service.views.follow import _is_follower
 from service.views.stories import reacted
+
+ENDPOINT_STATS = 'http://localhost:5004/stats/'
+
+ENDPOINT_STORIES = 'http://localhost:500x/story_list/'
 
 wall = Blueprint('wall', __name__)
 
@@ -42,26 +46,112 @@ def getmywall():
 @wall.route('/wall/<user_id>', methods=['GET'])
 @login_required
 def render_wall(user_id):
-    q = db.session.query(User).filter(User.id == user_id)
-    user = q.first()
-    if user is None:
-        return User_not_found()
-
-    stats = Stats(user_id)
-
     form = SelectDiceSetForm()
 
-    stories = db.session.query(Story, User).join(User).filter(Story.author_id == user.id).all()
-    stories = list(
-        map(lambda x: (
-            x[0],
-            x[1],
-            "hidden" if x[1].id == current_user.id else "",
-            "unfollow" if _is_follower(
-                current_user.id, x[1].id) else "follow",
-            reacted(current_user.id, x[0].id)
-        ), stories)
+    reply = requests.get(ENDPOINT_STATS + str(user_id))
+
+    if reply.status_code != 200:
+        error = json.loads(str(reply.data, 'utf8'))
+        rend = render_template(
+            "wall.html",
+            message=str(error),
+            form=form,
+            stories=[],
+            active_button="stories",
+            like_it_url="/stories/reaction",
+            details_url="/stories",
+            error=True,
+            info_bar=False,
+            res_msg=str(''),
+            user=User(),
+            stats=Stats({})
+        )
+        return rend
+
+    try:
+        stats_js = json.loads(str(reply.data, 'utf8'))
+    except Exception as e:
+        rend = render_template(
+            "wall.html",
+            message=str(e),
+            form=form,
+            stories=[],
+            active_button="stories",
+            like_it_url="/stories/reaction",
+            details_url="/stories",
+            error=True,
+            info_bar=False,
+            res_msg=str(''),
+            user=User(),
+            stats=Stats({})
+        )
+        return rend
+
+    if stats_js.get('user') is None:
+        rend = render_template(
+            "wall.html",
+            message='Stats not retrieved',
+            form=form,
+            stories=[],
+            active_button="stories",
+            like_it_url="/stories/reaction",
+            details_url="/stories",
+            error=True,
+            info_bar=False,
+            res_msg=str(''),
+            user=User(),
+            stats=Stats({})
+        )
+        return rend
+
+    stats = Stats(stats_js)
+    user_js = stats.user
+    user: User = User(
+        user_id=user_js['user_id'],
+        firstname=user_js['firstname'],
+        lastname=user_js['lastname'],
+        email=user_js['email']
     )
+
+    try:
+        reply = requests.get(ENDPOINT_STORIES + str(user_id))
+        body = json.loads(str(reply.data, 'utf8'))
+    except Exception as e:
+        rend = render_template(
+            "wall.html",
+            message=str(e),
+            form=form,
+            stories=[],
+            active_button="stories",
+            like_it_url="/stories/reaction",
+            details_url="/stories",
+            error=True,
+            info_bar=False,
+            res_msg=str(''),
+            user=user,
+            stats=Stats({})
+        )
+        return rend
+
+    stories = body['stories']
+
+    if body['result'] < 1:
+        rend = render_template(
+            "wall.html",
+            message=body['message'],
+            form=form,
+            stories=stories,
+            active_button="stories",
+            like_it_url="/stories/reaction",
+            details_url="/stories",
+            error=True,
+            info_bar=False,
+            res_msg=str(''),
+            user=user,
+            stats=stats
+        )
+
+        return rend
 
     rend = render_template(
         "wall.html",
@@ -79,36 +169,3 @@ def render_wall(user_id):
     )
 
     return rend
-
-
-@wall.route('/thewall/<user_id>', methods=['GET'])
-@login_required
-def getawall(user_id):
-    # if user_id < 0:
-    #     return User_not_found()
-    q = db.session.query(User).filter(User.id == user_id)
-    user = q.first()
-    if user is None:
-        return User_not_found()
-
-    q = db.session.query(Story).filter(Story.author_id == user.id)
-    thewall: Wall = Wall(user)
-    user_stories = []
-    for s in q:
-        s: Story
-        thewall.add_story(s)
-        user_stories.append(
-            {'story_id': s.id,
-             'text': s.text,
-             'likes': s.likes,
-             'dislikes': s.dislikes
-             })
-        #user_stories.append(s)
-
-    return jsonify(firstname=user.firstname,
-                   lastname=user.lastname,
-                   id=user.id,
-                   email=user.email,
-                   stories=user_stories) # thewall.stories
-
-"""

@@ -22,16 +22,16 @@ def load_user(user_id):
     headers = {'Content-type': 'application/json; charset=UTF-8'}
     call_user = requests.get("{}/{}".format(GET_USER_URL, user_id), headers=headers)
     data = call_user.json()
-    user = User(        user_id=data["user_id"],
-                        firstname=data["firstname"],
-                        lastname=data["lastname"],
-                        email=data["email"],
-                        dateofbirth=data["dateofbirth"],
-                        token= data["auth_token"],
-                        is_active=data["is_active"],
-                        is_admin=data["is_admin"],
-                        authenticated=data["is_authenticated"]
-                        )
+    user = User(user_id=data["user_id"],
+                firstname=data["firstname"],
+                lastname=data["lastname"],
+                email=data["email"],
+                dateofbirth=data["dateofbirth"],
+                token= data["auth_token"],
+                is_active=data["is_active"],
+                is_admin=data["is_admin"],
+                authenticated=data["is_authenticated"]
+                )
 
     if call_user.json()["response"]:
 
