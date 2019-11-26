@@ -16,12 +16,12 @@
     </a>
     <div class="inline">
       <button class="like {{ 'active' if react==1 }}" id="button_{{ story.id }}_1"
-        onclick="return react(this, '{{ story.id }}', 1)">
+        onclick="return react(this, '{{ story.id }}', 1, token_jwt, user_id)">
         <span>{{story.likes}}</span>
         <i class="far"></i>
       </button>
       <button class="dislike {{ 'active' if react==2 }}" id="button_{{ story.id }}_2"
-        onclick="return react(this, '{{ story.id }}', 2)">
+        onclick="return react(this, '{{ story.id }}', 2, token_jwt, user_id)">
         <span>{{story.dislikes}}</span>
         <i class="far"></i>
       </button>
@@ -56,11 +56,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 <script type="text/javascript">
-  function react(button, story_id, react_type) {
-    $.ajax({
+  function react(button, story_id, react_type, token_jwt, reacter) {
+      let REACTIONS_SERVICE_IP = '0.0.0.0';
+      let REACTIONS_SERVICE_PORT = '5005';
+      $.ajax({
       dataType: 'json',
-      type: "GET",
-      url: "/stories/reaction/" + story_id + "/" + react_type,
+      type: "POST",
+      url: REACTIONS_SERVICE_IP + ":" + REACTIONS_SERVICE_PORT +
+          "/reactions/" + story_id + "/" + react_type +  "/" + reacter,
+      beforeSend: function (xhr) {   //Include the bearer token in header
+        xhr.setRequestHeader("Authorization", 'Bearer '+ token_jwt);
+      },
       success: function (data) {
         console.log(data)
         switch (data.reply) {
