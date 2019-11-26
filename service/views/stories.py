@@ -5,7 +5,7 @@ from service.auth import current_user #??
 from requests.exceptions import Timeout
 from flask_login import (current_user, login_required)
 
-from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
+from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, DICE_SERVICE_IP, DICE_SERVICE_PORT
 from service.forms import StoryForm, SelectDiceSetForm, StoryFilter
 from service.database import db, Story, Reaction, User
 from service.classes.DiceSet import DiceSet, WrongDiceNumberError, NonExistingSetError, WrongArgumentTypeError
@@ -169,29 +169,38 @@ def get_story_by_id(story_id):
     else:
         abort(404)
 
+
+def get_roll(dicenumber, dicesetid):
+    url = 'http://' + DICE_SERVICE_IP + ':' + DICE_SERVICE_PORT + '/rolldice' + str(dicenumber) + '/' + str(dicesetid)
+    reply = request.get(url)
+    roll = json.loads(str(reply.data))
+    return roll
+
+
  # TODO
 @storiesbp.route('/rolldice/<dicenumber>/<dicesetid>', methods=['GET'])
 def _roll(dicenumber, dicesetid):
     form = StoryForm()
-    try:
-        dice = DiceSet(dicesetid)
-    except NonExistingSetError:
-        abort(404)
 
-    try:
-        roll = dice.throw_dice(dicenumber)
+    # Get the roll info (message, diceset and roll, which is an array of strings representing the faces) 
+    roll_info = get_roll(dicenumber, dicesetid)
+
+    if(roll_info["message"]=="Correct roll"):
+        roll = roll_info["roll"]
         phrase = ""
         for elem in roll:
             phrase = phrase + elem + " "
-    except WrongDiceNumberError:
-        return _stories("<div class=\"alert alert-danger alert-dismissible fade show\">" +
-                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" +
-                        "<strong>Error!</strong> Wrong dice number!</div>")
-    except WrongArgumentTypeError:
+        return render_template("create_story.html", form=form, set=dicesetid, roll=roll, phrase=phrase)
+    elif(roll_info["message"]=="Dice number needs to be an integer!"):
         return _stories("<div class=\"alert alert-danger alert-dismissible fade show\">" +
                         "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" +
                         "<strong>Error!</strong> Argument Dice number needs to be an integer!</div>")
-    return render_template("create_story.html", form=form, set=dicesetid, roll=roll, phrase=phrase)
+    elif(roll_info["message"] == "Wrong dice number!"):
+        return _stories("<div class=\"alert alert-danger alert-dismissible fade show\">" +
+                        "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>" +
+                        "<strong>Error!</strong> Wrong dice number!</div>")
+    elif(roll_info["message"] == "Dice set " + str(dicesetid) " doesn't exist!" ):
+        abort(404)
 
 
 
