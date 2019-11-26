@@ -1,9 +1,8 @@
-"""
-
 from flask import abort, json
 
 from flask import Blueprint, render_template, request
-from service.auth import current_user
+from service.auth import current_user #??
+from requests.exceptions import Timeout
 from flask_login import (current_user, login_required)
 
 from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
@@ -19,6 +18,7 @@ storiesbp = Blueprint('stories', __name__)
 
 
 @storiesbp.route('/stories', methods=['POST', 'GET'])
+@login_required
 def _stories(message='', error=False, res_msg='', info_bar=False):
     # TODO delete
     current_user.id = 1
@@ -83,8 +83,7 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
                 x[0],
                 x[1],
                 "hidden" if x[1].id == current_user.id else "",
-                "unfollow" if _is_follower(
-                    current_user.id, x[1].id) else "follow",
+                "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                 reacted(current_user.id, x[0].id)
             ), allstories)
         )
@@ -98,7 +97,8 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             details_url="/stories",
             error=error,
             info_bar=info_bar,
-            res_msg=str(res_msg)
+            res_msg=str(res_msg),
+            current_user=current_user.id
         )
     elif 'GET' == request.method:
         stories = get_stories_s()
@@ -127,7 +127,8 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             details_url="/stories",
             error=error,
             info_bar=info_bar,
-            res_msg=str(res_msg)
+            res_msg=str(res_msg),
+            current_user=current_user.id
         )
 
 
@@ -168,7 +169,7 @@ def get_story_by_id(story_id):
     else:
         abort(404)
 
-
+ # TODO
 @storiesbp.route('/rolldice/<dicenumber>/<dicesetid>', methods=['GET'])
 def _roll(dicenumber, dicesetid):
     form = StoryForm()
@@ -193,12 +194,16 @@ def _roll(dicenumber, dicesetid):
     return render_template("create_story.html", form=form, set=dicesetid, roll=roll, phrase=phrase)
 
 
+
 @storiesbp.route('/stories/random', methods=['GET'])
 def random_story():
-    random_story = get_random_story()
-    return None # TODO: which return is the right one?
+    try:
+        random_story = get_random_story()
+    except:
+        random_story = Story()
+    #return None # TODO: which return is the right one?
     #return redirect('/stories/'+str(random_story_from_db.id))
-    #return render_template("story_detail.html", story=random_story_from_db)
+    return render_template("story_detail.html", story=random_story)
 
 def get_random_story():
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/random'
@@ -228,8 +233,7 @@ def filter_stories():
                         x[0],
                         x[1],
                         "hidden" if x[1]["id"] == current_user.id else "",
-                        "unfollow" if _is_follower(
-                            current_user.id, x[1]["id"]) else "follow",
+                        "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                         reacted(current_user.id, x[0]["id"])
                     ), f_stories))
                 return render_template('filter_stories.html',
@@ -239,7 +243,8 @@ def filter_stories():
                                        like_it_url="/stories/reaction",
                                        details_url="/stories",
                                        error=False,
-                                       info_bar=False
+                                       info_bar=False,
+                                       current_user=current_user.id
                                        )
         else:
             return render_template('filter_stories.html',
@@ -279,6 +284,37 @@ def reacted(user_id, story_id):
         return q[0].type
     return 0
 
+
+@storiesbp.route('/stories/<storyid>/remove/<page>', methods=['POST'])
+@login_required
+def remove_story(story_id, page):
+    if call_remove_story_s(story_id):
+        # Removed correctly
+        # ? remove reactions of story_id ?
+        message = 'The story has been canceled.'
+        if page == 'stories':
+            return _stories(message=message)
+        else
+            return index()
+    else:
+        # NOT Removed correctly
+        message = 'The story was written by another user and cannot be deleted.'
+        return _stories(message=message)
+    
+
+
+def call_remove_story_s(story_id):
+    url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/remove/' + str(story_id)
+    try:
+        reply = request.post(url, args={'userid': current_user.id}, timeout=1)
+    except Timeout:
+        return False
+
+    reply = json.loads(str(reply.data))
+
+    return reply["result"] == 0
+
+"""
 @storiesbp.route('/stories/<storyid>/remove/<page>', methods=['POST'])
 @login_required
 def get_remove_story(storyid,page):
@@ -308,8 +344,7 @@ def get_remove_story(storyid,page):
                         x[0],
                         x[1],
                         "hidden" if x[1].id == current_user.id else "",
-                        "unfollow" if _is_follower(
-                            current_user.id, x[1].id) else "follow",
+                        "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                         reacted(current_user.id, x[0].id)
                     ), allstories)
                 )
@@ -326,7 +361,8 @@ def get_remove_story(storyid,page):
                     details_url="/stories",
                     error=error,
                     info_bar=info_bar,
-                    res_msg=str(res_msg)
+                    res_msg=str(res_msg),
+                    current_user=current_user.id
                 )
             else:
                 return index()
@@ -343,8 +379,7 @@ def get_remove_story(storyid,page):
                     x[0],
                     x[1],
                     "hidden" if x[1].id == current_user.id else "",
-                    "unfollow" if _is_follower(
-                        current_user.id, x[1].id) else "follow",
+                    "unfollow" if is_follower_s(current_user.id, x[1]['user_id']) else "follow",
                     reacted(current_user.id, x[0].id)
                 ), allstories)
             )
@@ -361,10 +396,11 @@ def get_remove_story(storyid,page):
                 details_url="/stories",
                 error=error,
                 info_bar=info_bar,
-                res_msg=str(res_msg)
+                res_msg=str(res_msg),
+                current_user=current_user.id
             )
 
     else:
-        # Story doensn't exist
+        # Story doesn't exist
         abort(404)
 """

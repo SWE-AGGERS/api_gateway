@@ -4,7 +4,7 @@
     <div class="author inline">
       <div class="name">{{user.firstname}} {{user.lastname}}</div>
       <div class="follow {{cannot_follow}} inline">
-        <form method="POST" action="/{{method}}/{{user.id}}">
+        <form method="POST" action="/{{method}}/{{current_user}}/{{user.id}}">
           <button type="submit">
             <i class="fa {{method}}"></i>
           </button>
