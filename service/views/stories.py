@@ -1,7 +1,8 @@
 from flask import abort, json
 
 from flask import Blueprint, render_template, request
-from service.auth import current_user
+from service.auth import current_user #??
+from requests.exceptions import Timeout
 from flask_login import (current_user, login_required)
 
 from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT
@@ -283,6 +284,37 @@ def reacted(user_id, story_id):
         return q[0].type
     return 0
 
+
+@storiesbp.route('/stories/<storyid>/remove/<page>', methods=['POST'])
+@login_required
+def remove_story(story_id, page):
+    if call_remove_story_s(story_id):
+        # Removed correctly
+        # ? remove reactions of story_id ?
+        message = 'The story has been canceled.'
+        if page == 'stories':
+            return _stories(message=message)
+        else
+            return index()
+    else:
+        # NOT Removed correctly
+        message = 'The story was written by another user and cannot be deleted.'
+        return _stories(message=message)
+    
+
+
+def call_remove_story_s(story_id):
+    url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/remove/' + str(story_id)
+    try:
+        reply = request.post(url, args={'userid': current_user.id}, timeout=1)
+    except Timeout:
+        return False
+
+    reply = json.loads(str(reply.data))
+
+    return reply["result"] == 0
+
+"""
 @storiesbp.route('/stories/<storyid>/remove/<page>', methods=['POST'])
 @login_required
 def get_remove_story(storyid,page):
@@ -369,5 +401,6 @@ def get_remove_story(storyid,page):
             )
 
     else:
-        # Story doensn't exist
+        # Story doesn't exist
         abort(404)
+"""
