@@ -16,12 +16,12 @@
     </a>
     <div class="inline">
       <button class="like {{ 'active' if react==1 }}" id="button_{{ story.id }}_1"
-        onclick="return react(this, '{{ story.id }}', 1, {{ token_jwt }}, {{ user_id }})">
+        onclick="return react(this, '{{ story.id }}', 1, {{ token_jwt }}, {{ current_user }})">
         <span>{{story.likes}}</span>
         <i class="far"></i>
       </button>
       <button class="dislike {{ 'active' if react==2 }}" id="button_{{ story.id }}_2"
-        onclick="return react(this, '{{ story.id }}', 2, {{ token_jwt }}, {{ user_id }})">
+        onclick="return react(this, '{{ story.id }}', 2, {{ token_jwt }}, {{ current_user }})">
         <span>{{story.dislikes}}</span>
         <i class="far"></i>
       </button>
@@ -60,7 +60,7 @@
       $.ajax({
       dataType: 'json',
       type: "POST",
-      url: "http://172.20.0.1:5005/reactions/" + story_id + "/" + react_type +  "/" + reacter,
+      url: "http://172.28.1.6:5000/reactions/" + story_id + "/" + react_type +  "/" + reacter,
       beforeSend: function (xhr) {   //Include the bearer token in header
         xhr.setRequestHeader("Authorization", 'Bearer '+ token_jwt);
       },

@@ -60,7 +60,7 @@ def signup():
 
         headers = {'Content-type': 'application/json; charset=UTF-8'}
         date = "{}".format(form.data["dateofbirth"]).split("-")
-        data = {
+        data = json.dumps({
                 "firstname" : form.data['firstname'],
                 "lastname": form.data['lastname'],
                 "email" : form.data["email"],
@@ -70,8 +70,9 @@ def signup():
                     "day": date[0]
                 },
                 "password": form.data["password"]
-                }
+                })
         singup_request = requests.post(SIGNUP_URL, json=data, headers=headers)
+        raise Exception(singup_request)
         try:
             data = singup_request.json()
         except:
@@ -96,3 +97,5 @@ def signup():
             return render_template('signup.html', form=form, error=True, message="The email was used before. Please change the email!")
     if request.method == 'GET':
         return render_template('signup.html', form=form)
+
+

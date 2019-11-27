@@ -7,11 +7,13 @@ from flask_login import login_required
 from service.classes.Stats import Stats
 from service.classes.Stories import Stories
 from service.classes.User import User
+
+from service.classes.Utils import getUser, getStories
 from service.auth import current_user
 from service.forms import SelectDiceSetForm
 
 from service.views.stories import reacted
-from service.constants import STATS_URL, STORIES_LIST_URL
+from service.constants import STATS_URL, STORIES_LIST_URL, GET_USER_URL
 
 
 wall = Blueprint('wall', __name__)
@@ -49,8 +51,9 @@ def render_wall(user_id):
 
     reply = requests.get(STATS_URL + str(user_id))
 
+
     if reply.status_code != 200:
-        error = json.loads(str(reply.data, 'utf8'))
+        error = reply.json()
         rend = render_template(
             "wall.html",
             message=str(error),
@@ -62,13 +65,13 @@ def render_wall(user_id):
             error=True,
             info_bar=False,
             res_msg=str(''),
-            user=User(),
+            user=getUser(user_id),
             stats=Stats({})
         )
         return rend
 
     try:
-        stats_js = json.loads(str(reply.data, 'utf8'))
+        stats_js = reply.json()
     except Exception as e:
         rend = render_template(
             "wall.html",
@@ -81,9 +84,9 @@ def render_wall(user_id):
             error=True,
             info_bar=False,
             res_msg=str(''),
-            user=User(),
+            user=getUser(user_id),
             stats=Stats({})
-        )
+        )   
         return rend
 
     if stats_js.get('user') is None:
@@ -98,7 +101,7 @@ def render_wall(user_id):
             error=True,
             info_bar=False,
             res_msg=str(''),
-            user=User(),
+            user=getUser(user_id),
             stats=Stats({})
         )
         return rend

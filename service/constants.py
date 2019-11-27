@@ -25,3 +25,8 @@ GET_USER_URL = "http://{}:{}/user".format(USERS_SERVICE_IP, USERS_SERVICE_PORT) 
 
 STATS_URL = "http://{}:{}/stats/".format(PROFILING_SERVICE_IP, PROFILING_SERVICE_PORT)
 STORIES_LIST_URL = "http://{}:{}/story_list/".format(STORIES_SERVICE_IP, STORIES_SERVICE_PORT)
+STORIES_URL = "http://{}:{}/stories/".format(STORIES_SERVICE_IP, STORIES_SERVICE_PORT)
+
+USER_URL = "http://{}:{}/user/".format(USERS_SERVICE_IP, USERS_SERVICE_PORT)
+
+FOLLOWING_LIST_URL = "http://{}:{}/followed/list/".format(USERS_SERVICE_IP, USERS_SERVICE_PORT)

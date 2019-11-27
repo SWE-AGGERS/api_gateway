@@ -1,10 +1,12 @@
-from flask import abort, json
+from flask import abort, json, jsonify
 from flask import Blueprint, render_template, request
 from requests.exceptions import Timeout
 from flask_login import (current_user, login_required)
 from service.constants import STORIES_SERVICE_IP, STORIES_SERVICE_PORT, USERS_SERVICE_IP, USERS_SERVICE_PORT, DICE_SERVICE_IP, DICE_SERVICE_PORT, REACTIONS_SERVICE_IP, REACTIONS_SERVICE_PORT
 from service.forms import StoryForm, SelectDiceSetForm, StoryFilter
 from service.views.home import index
+
+from service.classes.Stories import DetailedStory
 import requests
 import re
 
@@ -53,7 +55,8 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             error=error,
             info_bar=info_bar,
             res_msg=str(res_msg),
-            current_user=current_user.id
+            current_user=current_user.id,
+            token_jwt=current_user.token
         )
     elif 'GET' == request.method:
         stories = get_stories_s()
@@ -83,7 +86,8 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             error=error,
             info_bar=info_bar,
             res_msg=str(res_msg),
-            current_user=current_user.id
+            current_user=current_user.id,
+            token_jwt=current_user.token
         )
 
 
@@ -161,27 +165,21 @@ def _roll(dicenumber, dicesetid):
     elif(roll_info["message"] == "Dice set " + str(dicesetid) + " doesn't exist!" ):
         abort(404)
 
+@storiesbp.route('/stories/random', methods=['GET'])
+def random_story():
+
+    random_story = DetailedStory(get_random_story())
+    return render_template("story_detail.html", story=random_story)
 
 
 def get_random_story():
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/random'
-    reply = requests.get(url, timeout=1)
+    reply = requests.get(url, timeout=5)
     json_data = reply.json()
-    if json_data["result"] == 1:
+    if json_data["result"]:
         return json_data["story"]
     else:
         raise StoryNonExistsError('Story not exists!')
-
-
-@storiesbp.route('/stories/random', methods=['GET'])
-def random_story():
-    try:
-        random_story = get_random_story()
-    except:
-        random_story = None
-    #return None # TODO: which return is the right one?
-    #return redirect('/stories/'+str(random_story_from_db.id))
-    return render_template("story_detail.html", story=random_story)
 
 
 
@@ -214,7 +212,9 @@ def filter_stories():
                                        details_url="/stories",
                                        error=False,
                                        info_bar=False,
-                                       current_user=current_user.id
+                                       c_user=current_user,
+                                       current_user=current_user.id,
+                                       token_jwt=current_user.token
                                        )
         else:
             return render_template('filter_stories.html',
@@ -228,19 +228,17 @@ def get_filtered_stories(init_date, end_date):
     url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/filter'
 
     # Filter correctly a time interval
-    reply = requests.post(url, data=json.dumps({'info':
-                                                {'userid': current_user.id,
-                                                 'init_date': init_date,
-                                                 'end_date': end_date,
-                                                 }}), content_type='application/json')
-    body = json.loads(str(reply.data, 'utf8'))
+    data = json.dumps({'info': {'userid': current_user.id, 'init_date': init_date, 'end_date': end_date}})
+    reply = requests.post(url, json=json.dumps({'info': {'userid': current_user.id, 'init_date': init_date, 'end_date': end_date}}))
+
+    body = reply.json()
 
     if body["result"] == 1:
         return body["stories"]
     elif body["result"] == 0:
         return []
     else:
-        return None #Raise exception? #TODO
+        return [] #Raise exception? #TODO
 
 
 
@@ -274,7 +272,9 @@ def remove_story(story_id, page):
             details_url="/stories",
             error=reply['result'],
             info_bar=info_bar,
-            res_msg=str(res_msg))
+            res_msg=str(res_msg),
+            current_user=current_user.id,
+            token_jwt=current_user.token)
     else:
         return index()
     
@@ -290,4 +290,6 @@ def call_remove_story_s(story_id, user_id):
 
 def reacted(user_id, story_id):
     url = 'http://' + REACTIONS_SERVICE_IP + ':' + REACTIONS_SERVICE_PORT + '/reacted_on/'+ str(story_id) + '/' + str(user_id)
+
+
 
