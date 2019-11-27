@@ -72,7 +72,7 @@ def signup():
                 "password": form.data["password"]
                 })
         singup_request = requests.post(SIGNUP_URL, json=data, headers=headers)
-        raise Exception(singup_request)
+
         try:
             data = singup_request.json()
         except:

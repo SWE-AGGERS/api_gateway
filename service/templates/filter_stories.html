@@ -50,7 +50,7 @@
       {% endif %}
 </div>
 
-{% if current_user.is_authenticated %}
+{% if c_user.is_authenticated %}
    <div class="container mt-4" >
    <form  action="" method="post" role="form">
     {{ form.hidden_tag() }}
