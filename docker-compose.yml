@@ -1,0 +1,101 @@
+version: '3'
+services:
+  api-gateway:
+    build: ./api_gateway
+    ports:
+      - "5010:5000"
+    volumes:
+      - './api_gateway:/code'
+    environment:
+      PYTHONUNBUFFERED: 'true'
+
+  stories:
+    build: ./stories_service
+    ports:
+      - "5001:5000"
+    volumes:
+      - './stories_service:/code'
+    environment:
+      PYTHONUNBUFFERED: 'true'
+    links:
+      - reactions
+
+  users:
+    build: ./users_service
+    ports:
+      - "5002:5000"
+    volumes:
+      - './users_service:/code'
+    environment:
+      PYTHONUNBUFFERED: 'true'
+
+  dice:
+    build: ./DiceManagement
+    depends_on:
+      - mongodb
+    links:
+      - mongodb    
+    ports:
+      - "5003:5000"
+    volumes:
+      - './DiceManagement:/code'
+    environment:
+      WAIT_HOSTS: mongodb:27017
+      PYTHONUNBUFFERED: 'true'
+    restart: on-failure
+
+  profiling:
+      build: ./socialdice_profiling
+      ports:
+        - "5004:5000"
+      volumes:
+        - './socialdice_profiling:/code'
+      environment:
+        PYTHONUNBUFFERED: 'true'
+
+  reactions:
+    build: ./reactions_service
+    ports:
+      - "5005:5000"
+    volumes:
+      - './reactions_service:/code'
+    environment:
+      PYTHONUNBUFFERED: 'true'
+
+  redis-reactions:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
+  redis-profiling:
+    image: "redis:alpine"
+    ports:
+      - "6380:6379"
+
+  celery-reactions:
+    build: ./reactions_service
+    command: celery worker -l error -E -A service.background
+    volumes: # for bind volume
+      - './reactions_service:/code'
+
+  celery-profiling:
+    build: ./socialdice_profiling
+    command: celery worker -l error -E -A stats_service.background
+    volumes: 
+      - './socialdice_profiling:/code'
+
+  mongodb:
+    image: "mongo"
+    container_name: "mongodb"
+    environment:
+      - MONGO_INITDB_DATABASE=DiceDB
+    ports:
+      - "27017:27017"
+    command: mongod --bind_ip=0.0.0.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:27017"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
