@@ -9,9 +9,11 @@ from service.views.home import index
 from service.classes.Stories import DetailedStory
 import requests
 import re
+import jwt
 
 storiesbp = Blueprint('stories', __name__)
 
+PASS_KEY = 'JWT-SECRET-PASS'
 
 @storiesbp.route('/stories', methods=['POST', 'GET'])
 @login_required
@@ -56,7 +58,7 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             info_bar=info_bar,
             res_msg=str(res_msg),
             current_user=current_user.id,
-            token_jwt=current_user.token
+            token_jwt=encode_auth_token(current_user.id)
         )
     elif 'GET' == request.method:
         stories = get_stories_s()
@@ -87,7 +89,7 @@ def _stories(message='', error=False, res_msg='', info_bar=False):
             info_bar=info_bar,
             res_msg=str(res_msg),
             current_user=current_user.id,
-            token_jwt=current_user.token
+            token_jwt=encode_auth_token(current_user.id)
         )
 
 
@@ -214,7 +216,7 @@ def filter_stories():
                                        info_bar=False,
                                        c_user=current_user,
                                        current_user=current_user.id,
-                                       token_jwt=current_user.token
+                                       token_jwt=encode_auth_token(current_user.id)
                                        )
         else:
             return render_template('filter_stories.html',
@@ -274,7 +276,7 @@ def remove_story(story_id, page):
             info_bar=info_bar,
             res_msg=str(res_msg),
             current_user=current_user.id,
-            token_jwt=current_user.token)
+            token_jwt=encode_auth_token(current_user.id))
     else:
         return index()
     
@@ -292,4 +294,21 @@ def reacted(user_id, story_id):
     url = 'http://' + REACTIONS_SERVICE_IP + ':' + REACTIONS_SERVICE_PORT + '/reacted_on/'+ str(story_id) + '/' + str(user_id)
 
 
-
+def (user_id):
+    """encode_auth_token
+    Generates the Auth Token
+    :return: string
+    """
+    try:
+        payload = {
+            'exp': dt.datetime.utcnow() + dt.timedelta(hours=1),
+            'iat': dt.datetime.utcnow(),
+            'sub': user_id
+        }
+        return jwt.encode(
+            payload,
+            PASS_KEY,
+            algorithm='HS256'
+        ).decode()
+    except Exception as e:
+        return e
