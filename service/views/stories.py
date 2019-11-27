@@ -294,7 +294,7 @@ def reacted(user_id, story_id):
     url = 'http://' + REACTIONS_SERVICE_IP + ':' + REACTIONS_SERVICE_PORT + '/reacted_on/'+ str(story_id) + '/' + str(user_id)
 
 
-def (user_id):
+def encode_auth_token(user_id):
     """encode_auth_token
     Generates the Auth Token
     :return: string
