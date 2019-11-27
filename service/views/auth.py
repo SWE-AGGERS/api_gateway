@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, json
 from flask_login import (current_user, login_user, logout_user, login_required)
 from service.classes.User import  User
 from service.forms import LoginForm
@@ -72,7 +72,10 @@ def signup():
                 "password": form.data["password"]
                 }
         singup_request = requests.post(SIGNUP_URL, json=data, headers=headers)
-        data = singup_request.json()
+        try:
+            data = singup_request.json()
+        except:
+            raise Exception(singup_request)
         print(data)
         if not singup_request.json()["error"]:
             user = User(user_id=data["user_id"],
