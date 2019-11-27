@@ -11,10 +11,8 @@ from service.auth import current_user
 from service.forms import SelectDiceSetForm
 
 from service.views.stories import reacted
+from service.constants import STATS_URL, STORIES_LIST_URL
 
-ENDPOINT_STATS = 'http://localhost:5004/stats/'
-
-ENDPOINT_STORIES = 'http://localhost:500x/story_list/'
 
 wall = Blueprint('wall', __name__)
 
@@ -49,7 +47,7 @@ def getmywall():
 def render_wall(user_id):
     form = SelectDiceSetForm()
 
-    reply = requests.get(ENDPOINT_STATS + str(user_id))
+    reply = requests.get(STATS_URL + str(user_id))
 
     if reply.status_code != 200:
         error = json.loads(str(reply.data, 'utf8'))
@@ -115,7 +113,7 @@ def render_wall(user_id):
     )
 
     try:
-        reply = requests.get(ENDPOINT_STORIES + str(user_id))
+        reply = requests.get(STORIES_LIST_URL + str(user_id))
         body = json.loads(str(reply.data, 'utf8'))
     except Exception as e:
         rend = render_template(

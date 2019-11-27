@@ -104,7 +104,7 @@ def get_users_s(_id):
     return json_data
 
 def is_follower_s(user_a, user_b):
-    url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/is_follower/' + user_a + '/' + user_b
+    url = 'http://' + USERS_SERVICE_IP + ':' + USERS_SERVICE_PORT + '/is_follower/' + str(user_a) + '/' + str(user_b)
     reply = requests.get(url, timeout=1)
     json_data = reply.json()
     return json_data['follow']
@@ -282,12 +282,12 @@ def remove_story(story_id, page):
 
 def call_remove_story_s(story_id, user_id):
 
-    url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/remove/' + str(story_id) + "?userid=" + user_id
+    url = 'http://' + STORIES_SERVICE_IP + ':' + STORIES_SERVICE_PORT + '/stories/remove/' + str(story_id) + "?userid=" + str(user_id)
     reply = requests.post(url)
     body = json.loads(str(reply.data, 'utf8'))
     return body
 
 
 def reacted(user_id, story_id):
-    url = 'http://' + REACTIONS_SERVICE_IP + ':' + REACTIONS_SERVICE_PORT + '/reacted_on/'+ story_id + '/' + user_id
+    url = 'http://' + REACTIONS_SERVICE_IP + ':' + REACTIONS_SERVICE_PORT + '/reacted_on/'+ str(story_id) + '/' + str(user_id)
 
